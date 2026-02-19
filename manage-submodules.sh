@@ -3,10 +3,11 @@
 # Submodule Management Helper Script
 # This script helps manage the submodules in this repository
 
-set -e
+# Only exit on error for critical operations
+# Non-critical operations should handle errors explicitly
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
+cd "$SCRIPT_DIR" || exit 1
 
 # Colors for output
 RED='\033[0;31m'
@@ -66,8 +67,14 @@ list_submodules() {
     echo "Checking git index for submodule entries..."
     echo ""
     
+    # Get submodule entries from git index - check for errors
+    if ! git ls-files --stage 2>/dev/null | grep "^160000" > /dev/null; then
+        print_error "Failed to read git index or no submodules found"
+        return 1
+    fi
+    
     # Get submodule entries from git index
-    git ls-files --stage | grep "^160000" | while read -r mode hash stage path; do
+    git ls-files --stage 2>/dev/null | grep "^160000" | while read -r mode hash stage path; do
         if [ -d "$path" ] && [ ! "$(ls -A "$path" 2>/dev/null)" ]; then
             status="${RED}EMPTY${NC}"
         elif [ -d "$path" ] && [ "$(ls -A "$path" 2>/dev/null)" ]; then
@@ -82,7 +89,7 @@ list_submodules() {
         echo ""
     done
     
-    count=$(git ls-files --stage | grep "^160000" | wc -l)
+    count=$(git ls-files --stage 2>/dev/null | grep "^160000" | wc -l)
     print_info "Total submodules: $count"
 }
 
@@ -97,9 +104,9 @@ check_configuration() {
         if [ -s ".gitmodules" ]; then
             print_success ".gitmodules file has content"
             
-            # Count configured submodules
-            configured=$(grep -c "^\[submodule" .gitmodules || echo "0")
-            total=$(git ls-files --stage | grep "^160000" | wc -l)
+            # Count configured submodules with error handling
+            configured=$(grep -c "^\[submodule" .gitmodules 2>/dev/null || echo "0")
+            total=$(git ls-files --stage 2>/dev/null | grep "^160000" | wc -l || echo "0")
             
             echo ""
             print_info "Configured submodules: $configured"
@@ -122,12 +129,17 @@ check_configuration() {
     
     echo ""
     
-    # Check submodule status
+    # Check submodule status - fix subshell variable issue
     print_info "Checking submodule directories..."
+    
+    # Count submodules using a temp file to preserve counts
     empty_count=0
     has_content_count=0
+    total=0
     
-    git ls-files --stage | grep "^160000" | while read -r mode hash stage path; do
+    # Use process substitution to avoid subshell
+    while read -r mode hash stage path; do
+        total=$((total + 1))
         if [ -d "$path" ]; then
             if [ ! "$(ls -A "$path" 2>/dev/null)" ]; then
                 empty_count=$((empty_count + 1))
@@ -135,17 +147,20 @@ check_configuration() {
                 has_content_count=$((has_content_count + 1))
             fi
         fi
-    done
+    done < <(git ls-files --stage 2>/dev/null | grep "^160000" || true)
     
-    total=$(git ls-files --stage | grep "^160000" | wc -l)
-    print_info "Empty directories: Finding..."
-    print_info "Directories with content: Finding..."
+    print_info "Total submodules: $total"
+    print_info "Empty directories: $empty_count"
+    print_info "Directories with content: $has_content_count"
 }
 
 show_info() {
     print_header "Detailed Submodule Information"
     
-    echo "This repository contains $(git ls-files --stage | grep "^160000" | wc -l) submodules."
+    # Get submodule count with error handling
+    submodule_count=$(git ls-files --stage 2>/dev/null | grep "^160000" | wc -l || echo "0")
+    
+    echo "This repository contains $submodule_count submodules."
     echo ""
     echo "What are submodules?"
     echo "  Git submodules are references to other git repositories at specific commits."
@@ -185,16 +200,25 @@ validate_urls() {
     print_warning "This feature requires network access and proper git credentials"
     echo ""
     
+    # Check if .gitmodules has valid submodule entries
+    if ! grep "^\[submodule" .gitmodules > /dev/null 2>&1; then
+        print_warning "No submodule entries found in .gitmodules"
+        return 0
+    fi
+    
     # Parse .gitmodules and try to validate each URL
     grep "^\[submodule" .gitmodules | while read -r line; do
         submodule_name=$(echo "$line" | sed 's/\[submodule "\(.*\)"\]/\1/')
-        path=$(git config -f .gitmodules "submodule.$submodule_name.path")
-        url=$(git config -f .gitmodules "submodule.$submodule_name.url")
+        
+        # Use git config with error handling
+        path=$(git config -f .gitmodules "submodule.$submodule_name.path" 2>/dev/null || echo "")
+        url=$(git config -f .gitmodules "submodule.$submodule_name.url" 2>/dev/null || echo "")
         
         if [ -z "$url" ] || [ "$url" = "<URL_NEEDED>" ]; then
             print_warning "$submodule_name: URL not configured"
         else
             echo -n "Checking $submodule_name ($url)... "
+            # Allow this to fail gracefully
             if git ls-remote "$url" HEAD &>/dev/null; then
                 print_success "accessible"
             else
