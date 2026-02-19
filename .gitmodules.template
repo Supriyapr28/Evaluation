@@ -1,0 +1,168 @@
+# Git Submodules Configuration Template
+#
+# This file should contain the configuration for all submodules in this repository.
+# Currently, the submodule URLs are not available. 
+#
+# To restore access to the submodules, you need to fill in the correct URLs
+# for each submodule below, then run:
+#   git submodule init
+#   git submodule update
+#
+# Template format for each submodule:
+# [submodule "path/to/submodule"]
+#     path = path/to/submodule
+#     url = https://github.com/username/repository.git
+#
+# ============================================================================
+# SUBMODULES REQUIRING URL CONFIGURATION
+# ============================================================================
+
+# Top-level evaluation projects
+# [submodule "b2r_oli_ev"]
+#     path = b2r_oli_ev
+#     url = <URL_NEEDED>
+
+# [submodule "ev_born2R"]
+#     path = ev_born2R
+#     url = <URL_NEEDED>
+
+# [submodule "ev_tracy_libft"]
+#     path = ev_tracy_libft
+#     url = <URL_NEEDED>
+
+# [submodule "ev_yudi_libft"]
+#     path = ev_yudi_libft
+#     url = <URL_NEEDED>
+
+# [submodule "ft_printf_mai_ev"]
+#     path = ft_printf_mai_ev
+#     url = <URL_NEEDED>
+
+# [submodule "libft_taali_ev"]
+#     path = libft_taali_ev
+#     url = <URL_NEEDED>
+
+# [submodule "push_swap_nikita_ev"]
+#     path = push_swap_nikita_ev
+#     url = <URL_NEEDED>
+
+# Piscine evaluation projects
+# [submodule "piscine_ev/C00_lupelleg_ev"]
+#     path = piscine_ev/C00_lupelleg_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/C06_nashena_ev"]
+#     path = piscine_ev/C06_nashena_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/C08_tengl_ev"]
+#     path = piscine_ev/C08_tengl_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/C09_tony_ev"]
+#     path = piscine_ev/C09_tony_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/C11_sinan_ev"]
+#     path = piscine_ev/C11_sinan_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/C11_thundin_ev"]
+#     path = piscine_ev/C11_thundin_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/alex_ev"]
+#     path = piscine_ev/alex_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/angela_ev"]
+#     path = piscine_ev/angela_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/arnela_ev"]
+#     path = piscine_ev/arnela_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/astaria_ev"]
+#     path = piscine_ev/astaria_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/c08_aganzler_ev"]
+#     path = piscine_ev/c08_aganzler_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/cfauq_ev"]
+#     path = piscine_ev/cfauq_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/daniel_ev"]
+#     path = piscine_ev/daniel_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/dstreck_ev"]
+#     path = piscine_ev/dstreck_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/dvel_ev"]
+#     path = piscine_ev/dvel_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/elisa_ev"]
+#     path = piscine_ev/elisa_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/eval"]
+#     path = piscine_ev/eval
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/fred_ev"]
+#     path = piscine_ev/fred_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/hassain_ev"]
+#     path = piscine_ev/hassain_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/jonas_ev"]
+#     path = piscine_ev/jonas_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/luna_ev"]
+#     path = piscine_ev/luna_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/natalia_ev"]
+#     path = piscine_ev/natalia_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/oscar_ev"]
+#     path = piscine_ev/oscar_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/pavel_ev"]
+#     path = piscine_ev/pavel_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/simon_ev"]
+#     path = piscine_ev/simon_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/thomas_ev"]
+#     path = piscine_ev/thomas_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/thudinh_ev"]
+#     path = piscine_ev/thudinh_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/vishnu_ev"]
+#     path = piscine_ev/vishnu_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/yua_ev"]
+#     path = piscine_ev/yua_ev
+#     url = <URL_NEEDED>
+
+# [submodule "piscine_ev/yuyigit_ev"]
+#     path = piscine_ev/yuyigit_ev
+#     url = <URL_NEEDED>
